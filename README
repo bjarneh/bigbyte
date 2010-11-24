@@ -1,0 +1,36 @@
+[ What ]
+
+A small implementation of the Boyer Moore Horspool algorithm for byte
+arrays for golang. Some stolen code from the bytes package is used for
+testing.
+
+For large byte sequences this should be able to outperform the function
+bytes.Index, but it's hard to give an accurate measure of how much better
+it will do..
+
+
+
+[ Wild duck ]
+
+I've made some benchmarks with the Henrik Ibsen play 'Wild duck', using
+strings which are present, and some which are not. The entire size of the
+play in terms of bytes: 278899
+
+The strings contained are placed here:
+
+    276159 - 99% into the file
+     16573 -  5% into the file
+     58757 - 21% into the file
+
++ 2 strings which aren't there.
+
+
+[ Results ]
+
+bigbyte_test.BenchmarkIndexBMH       500           3213600 ns/op
+bigbyte_test.BenchmarkIndex          100          13757270 ns/op
+
+Around 4-5 times as fast as bytes.Index, play size ~280K
+
+
+bjarneh
