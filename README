@@ -24,11 +24,22 @@ The strings contained are placed here:
 
 + 2 strings which aren't there.
 
+The length of the patterns are in the range: 20-60 byte 
+
 
 [ Results ]
 
+Intel Pentium M 1.7GHz 
+
 bigbyte_test.BenchmarkIndexBMH       500           3213600 ns/op
 bigbyte_test.BenchmarkIndex          100          13757270 ns/op
+
+
+Intel Centrino Core2 ULV 1.4GHz 
+
+bigbyte_test.BenchmarkIndexBMH      1000           2581667 ns/op
+bigbyte_test.BenchmarkIndex          100          11963380 ns/op
+
 
 Around 4-5 times as fast as bytes.Index, play size ~280K
 
