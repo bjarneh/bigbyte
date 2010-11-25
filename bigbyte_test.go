@@ -13,7 +13,21 @@ import (
 	"testing"
     "io/ioutil"
     "bytes"
+    "os"
 )
+
+var haystack    []byte
+
+func init(){
+
+    var err os.Error
+
+    haystack, err = ioutil.ReadFile("wild-duck.txt")
+
+    if err != nil {
+        panic("could not read file needed for Benchmark")
+    }
+}
 
 type BinOpTest struct {
 	a string
@@ -78,25 +92,24 @@ var benchTests = []BenchTests{
 	{"LKJoisdjflksjdf iOJJDFjl skdfjls df", -1},
 }
 
-func BenchmarkIndexBMH(b *testing.B)  { runBenchTests(b, IndexBMH, "bigbyte.IndexBMH", benchTests) }
-func BenchmarkIndex(b *testing.B)  { runBenchTests(b, bytes.Index, "bytes.Index", benchTests) }
+func BenchmarkIndexBMH(b *testing.B){
+    runBenchTests(b, IndexBMH, "bigbyte.IndexBMH", benchTests)
+}
+
+func BenchmarkIndex(b *testing.B){
+    runBenchTests(b, bytes.Index, "bytes.Index", benchTests)
+}
 
 func runBenchTests(b *testing.B, f func(s, sep []byte) int, funcName string, testCases []BenchTests){
 
     var needle []byte
     var result int
 
-    haystack, err := ioutil.ReadFile("wild-duck.txt")
-
-    if err != nil {
-        panic("could not read file needed for Benchmark")
-    }
-
     for _, bt := range testCases {
-        needle = bytes.NewBufferString(bt.find).Bytes()
+        needle = []byte(bt.find)
         result = f(haystack, needle)
         if result != bt.where {
-            panic("function: "+funcName+" does not work properly")
+            panic("function: "+funcName+", does not work properly")
         }
         for i := 0; i < b.N; i++ {
             _ = f(haystack, needle)

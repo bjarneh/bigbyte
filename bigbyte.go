@@ -1,14 +1,16 @@
-// Copyright 2010 bjarneh. All rights reserved.
+// Copyright 2010 bjarneh@ifi.uio.no. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// Author bjarneh@ifi.uio.no
 
 package bigbyte
 
 // Boyer Moore Horspool; backwards matching string algorithm.
 // Can be used to search for substrings in large []byte arrays
 // NOTE: not as quick as Boyer Moore in worst case scenarios
-// but without the added complexity in terms of code..
+// but without the added complexity in terms of code, and
+// without the startup problems that Boyer Moore has. I.e. this
+// will work comparable to bytes.Index on short strings, unlike
+// Boyer Moore with it's good suffix shift calculation at startup.
 func IndexBMH(haystack, needle []byte) (int) {
 
     const UINT8_MAX = 256
