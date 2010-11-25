@@ -30,6 +30,17 @@ func IndexBMH(haystack, needle []byte) (int) {
         return 0
     }
 
+    if len(needle) == 1 {
+        for i = 0; i < len(haystack); i++ {
+            if needle[0] == haystack[i] {
+                return i
+            }
+        }
+        return -1
+    }
+
+    // the algorithm starts here, special cases above.
+
     last = len(needle) - 1
     maxoffset = len(haystack) - len(needle)
 

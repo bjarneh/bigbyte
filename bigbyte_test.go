@@ -79,18 +79,19 @@ func TestIndexBMH(t *testing.T)  { runIndexTests(t, IndexBMH, "IndexBMH", indexT
 // using the same philosophy as the one the Go developers used for testing,
 // only now for benching :-)
 
-type BenchTests struct {
+type BenchTest struct {
     find string
     where int
 }
 
-var benchTests = []BenchTests{
+var benchTests = []BenchTest{
 	{"lkjlxkcj lsdjfl s", -1},
 	{"strækker armene ud og mumler.  Lovet være herren;", 276159},
 	{"her viser jo hjertelag,", 16573},
 	{"I alt det strå?  går mod den øverste dør til", 58757},
 	{"LKJoisdjflksjdf iOJJDFjl skdfjls df", -1},
 }
+
 
 func BenchmarkIndexBMH(b *testing.B){
     runBenchTests(b, IndexBMH, "bigbyte.IndexBMH", benchTests)
@@ -100,7 +101,7 @@ func BenchmarkIndex(b *testing.B){
     runBenchTests(b, bytes.Index, "bytes.Index", benchTests)
 }
 
-func runBenchTests(b *testing.B, f func(s, sep []byte) int, funcName string, testCases []BenchTests){
+func runBenchTests(b *testing.B, f func(s, sep []byte) int, funcName string, testCases []BenchTest){
 
     var needle []byte
     var result int
@@ -116,3 +117,4 @@ func runBenchTests(b *testing.B, f func(s, sep []byte) int, funcName string, tes
         }
     }
 }
+
