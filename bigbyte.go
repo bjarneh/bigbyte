@@ -4,13 +4,16 @@
 
 package bigbyte
 
-// Boyer Moore Horspool; backwards matching string algorithm.
-// Can be used to search for substrings in large []byte arrays
-// NOTE: not as quick as Boyer Moore in worst case scenarios
-// but without the added complexity in terms of code, and
-// without the startup problems that Boyer Moore has. I.e. this
-// will work comparable to bytes.Index on short strings, unlike
-// Boyer Moore with it's good suffix shift calculation at startup.
+
+// NOTE: This algorithm is not as quick as the original Boyer Moore in worst
+// case scenarios but without the added complexity in terms of code, and
+// without the startup problems that Boyer Moore has. I.e. this will be
+// almost as fast as bytes.Index on short strings, unlike Boyer Moore with
+// it's good suffix shift calculation at startup.
+
+
+// Boyer Moore Horspool, backwards matching string algorithm, can be used to
+// search in large []byte arrays
 func IndexBMH(haystack, needle []byte) (int) {
 
     const UINT8_MAX = 256
