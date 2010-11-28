@@ -1,6 +1,6 @@
 include $(GOROOT)/src/Make.inc
 
-TARG=bigbyte.googlecode.com/hg/bigbyte
+TARG=bigbyte.googlecode.com/hg
 GOFILES=\
 	bigbyte.go
 
