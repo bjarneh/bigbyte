@@ -9,7 +9,7 @@
 package bigbyte_test
 
 import (
-    . "bigbyte.googlecode.com/hg/bigbyte"
+    . "bigbyte.googlecode.com/hg"
 	"testing"
     "io/ioutil"
     "bytes"
