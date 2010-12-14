@@ -22,7 +22,7 @@ func init(){
 
     var err os.Error
 
-    haystack, err = ioutil.ReadFile("wild-duck.txt")
+    haystack, err = ioutil.ReadFile("wild-duck-no-utf8.txt")
 
     if err != nil {
         panic("could not read file needed for Benchmark")
