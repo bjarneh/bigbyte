@@ -14,6 +14,7 @@ import (
     "io/ioutil"
     "bytes"
     "os"
+    "path"
 )
 
 var haystack    []byte
@@ -21,8 +22,16 @@ var haystack    []byte
 func init(){
 
     var err os.Error
+    var srcroot string
 
-    haystack, err = ioutil.ReadFile("wild-duck-no-utf8.txt")
+    srcroot = os.Getenv("SRCROOT")
+
+    // we are testing with godag
+    if srcroot != "" {
+        haystack, err = ioutil.ReadFile(path.Join(srcroot,"wild-duck-no-utf8.txt"))
+    }else{// we are testing with Makefile
+        haystack, err = ioutil.ReadFile("wild-duck-no-utf8.txt")
+    }
 
     if err != nil {
         panic("could not read file needed for Benchmark")
