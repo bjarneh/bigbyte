@@ -9,8 +9,8 @@
 package bigbyte_test
 
 import (
-    . "bigbyte.googlecode.com/hg"
-	"testing"
+    . "github.com/bjarneh/bigbyte"
+    "testing"
     "io/ioutil"
     "bytes"
     "os"
@@ -22,13 +22,14 @@ var haystack    []byte
 func init(){
 
     var err os.Error
-    var srcroot string
+    var srcroot, me string
 
     srcroot = os.Getenv("SRCROOT")
+    me  = "github.com/bjarneh/bigbyte"
 
     // we are testing with godag
     if srcroot != "" {
-        haystack, err = ioutil.ReadFile(path.Join(srcroot,"wild-duck-no-utf8.txt"))
+        haystack, err = ioutil.ReadFile(path.Join(srcroot,me,"wild-duck-no-utf8.txt"))
     }else{// we are testing with Makefile
         haystack, err = ioutil.ReadFile("wild-duck-no-utf8.txt")
     }
