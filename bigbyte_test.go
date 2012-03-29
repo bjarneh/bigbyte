@@ -9,34 +9,34 @@
 package bigbyte_test
 
 import (
-    . "github.com/bjarneh/bigbyte"
-    "testing"
-    "io/ioutil"
-    "bytes"
-    "os"
-    "path"
+	"bytes"
+	. "github.com/bjarneh/bigbyte"
+	"io/ioutil"
+	"os"
+	"path"
+	"testing"
 )
 
-var haystack    []byte
+var haystack []byte
 
-func init(){
+func init() {
 
-    var err os.Error
-    var srcroot, me string
+	var err error
+	var srcroot, me string
 
-    srcroot = os.Getenv("SRCROOT")
-    me  = "github.com/bjarneh/bigbyte"
+	srcroot = os.Getenv("SRCROOT")
+	me = "github.com/bjarneh/bigbyte"
 
-    // we are testing with godag
-    if srcroot != "" {
-        haystack, err = ioutil.ReadFile(path.Join(srcroot,me,"wild-duck-no-utf8.txt"))
-    }else{// we are testing with Makefile
-        haystack, err = ioutil.ReadFile("wild-duck-no-utf8.txt")
-    }
+	// we are testing with godag
+	if srcroot != "" {
+		haystack, err = ioutil.ReadFile(path.Join(srcroot, me, "wild-duck-no-utf8.txt"))
+	} else { // we are testing with Makefile
+		haystack, err = ioutil.ReadFile("wild-duck-no-utf8.txt")
+	}
 
-    if err != nil {
-        panic("could not read file needed for Benchmark")
-    }
+	if err != nil {
+		panic("could not read file needed for Benchmark")
+	}
 }
 
 type BinOpTest struct {
@@ -70,7 +70,6 @@ var indexTests = []BinOpTest{
 	{"oooooooooooooooooooooo", "r", -1},
 }
 
-
 // Execute f on each test case.  funcName should be the name of f; it's used
 // in failure reports.
 func runIndexTests(t *testing.T, f func(s, sep []byte) int, funcName string, testCases []BinOpTest) {
@@ -84,14 +83,14 @@ func runIndexTests(t *testing.T, f func(s, sep []byte) int, funcName string, tes
 	}
 }
 
-func TestIndexBMH(t *testing.T)  { runIndexTests(t, IndexBMH, "IndexBMH", indexTests) }
+func TestIndexBMH(t *testing.T) { runIndexTests(t, IndexBMH, "IndexBMH", indexTests) }
 
 // using the same philosophy as the one the Go developers used for testing,
 // only now for benching :-)
 
 type BenchTest struct {
-    find string
-    where int
+	find  string
+	where int
 }
 
 var benchTests = []BenchTest{
@@ -102,29 +101,27 @@ var benchTests = []BenchTest{
 	{"LKJoisdjflksjdf iOJJDFjl skdfjls df", -1},
 }
 
-
-func BenchmarkIndexBMH(b *testing.B){
-    runBenchTests(b, IndexBMH, "bigbyte.IndexBMH", benchTests)
+func BenchmarkIndexBMH(b *testing.B) {
+	runBenchTests(b, IndexBMH, "bigbyte.IndexBMH", benchTests)
 }
 
-func BenchmarkIndex(b *testing.B){
-    runBenchTests(b, bytes.Index, "bytes.Index", benchTests)
+func BenchmarkIndex(b *testing.B) {
+	runBenchTests(b, bytes.Index, "bytes.Index", benchTests)
 }
 
-func runBenchTests(b *testing.B, f func(s, sep []byte) int, funcName string, testCases []BenchTest){
+func runBenchTests(b *testing.B, f func(s, sep []byte) int, funcName string, testCases []BenchTest) {
 
-    var needle []byte
-    var result int
+	var needle []byte
+	var result int
 
-    for _, bt := range testCases {
-        needle = []byte(bt.find)
-        result = f(haystack, needle)
-        if result != bt.where {
-            panic("function: "+funcName+", does not work properly")
-        }
-        for i := 0; i < b.N; i++ {
-            _ = f(haystack, needle)
-        }
-    }
+	for _, bt := range testCases {
+		needle = []byte(bt.find)
+		result = f(haystack, needle)
+		if result != bt.where {
+			panic("function: " + funcName + ", does not work properly")
+		}
+		for i := 0; i < b.N; i++ {
+			_ = f(haystack, needle)
+		}
+	}
 }
-
